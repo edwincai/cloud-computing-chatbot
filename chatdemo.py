@@ -7,9 +7,10 @@ import os.path
 import uuid
 
 from tornado.options import define, options, parse_command_line
+import bot
 
-define("port", default=8888, help="run on the given port", type=int)
-define("debug", default=True, help="run in debug mode")
+define("port", default=8080, help="run on the given port", type=int)
+define("debug", default=8080, help="run in debug mode")
 
 
 class MessageBuffer(object):
@@ -84,7 +85,8 @@ class MessageUpdatesHandler(tornado.web.RequestHandler):
             messages = global_message_buffer.get_messages_since(cursor)
         if self.request.connection.stream.closed():
             return
-        self.write(dict(messages=messages))
+        res = bot.chatbot_response(messages)
+        self.write(dict(messages=res))
 
     def on_connection_close(self):
         self.wait_future.cancel()

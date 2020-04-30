@@ -22,20 +22,67 @@ td {
 }
 
 #body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 50px;
+  padding: 30px;
+  border: 1px solid #ccc;
+  min-height: 600px;
+  border-radius: 30px;
+}
+
+#title {
+  padding-left: 30px;
+  width: 100%;
   position: absolute;
-  bottom: 10px;
-  left: 10px;
+  top: 0;
+  left: 0;
+  height: 60px;
+  line-height: 60px;
+  font-size: 30px;
+  font-weight: bold;
+  border-radius: 30px 30px 0px 0;
+  color: steelblue;
+  border-bottom: 1px solid #ccc;
 }
 
 #input {
-  margin-top: 0.5em;
+  margin-top: auto;
 }
 
-#inbox .message {
+.message {
+  width: fit-content;
+  margin-bottom: 20px;
+  padding: 10px;
+  background: #ccc;
+  border-radius: 8px;
+}
+
+.my-message {
+ background: #86bb71;
+}
+
+.other-message {
+  background: #94c2ed;
+}
+
+#message-input {
+  margin-right: 20px;
+}
+
+#inbox {
   padding-top: 0.25em;
+  overflow: scroll;
+  height: 600px;
+  margin-top: 30px;
 }
 
 #nav {
   float: right;
   z-index: 99;
+}
+
+.input-container {
+  display: flex;
 }
