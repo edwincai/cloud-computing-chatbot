@@ -85,7 +85,7 @@ class MessageUpdatesHandler(tornado.web.RequestHandler):
             messages = global_message_buffer.get_messages_since(cursor)
         if self.request.connection.stream.closed():
             return
-        res = bot.chatbot_response(messages)
+        res = bot.chatbot_response(messages) #type error: expected string
         self.write(dict(messages=res))
 
     def on_connection_close(self):
