@@ -55,6 +55,13 @@ class MessageNewHandler(tornado.web.RequestHandler):
         message = {"id": str(uuid.uuid4()), "body": self.get_argument("body")}
         # render_string() returns a byte string, which is not supported
         # in json, so we must convert it to a character string.
+
+        retmsg = {"id": str(uuid.uuid4()), "body": self.get_argument("body")}
+        retmsg["body"] = bot.chatbot_response(message["body"])
+        retmsg["html"] = tornado.escape.to_unicode(
+            self.render_string("message.html", message=retmsg)
+        )
+
         message["html"] = tornado.escape.to_unicode(
             self.render_string("message.html", message=message)
         )
@@ -63,7 +70,7 @@ class MessageNewHandler(tornado.web.RequestHandler):
         else:
             self.write(message)
         global_message_buffer.add_message(message)
-
+        global_message_buffer.add_message(retmsg)
 
 class MessageUpdatesHandler(tornado.web.RequestHandler):
     """Long-polling request for new messages.
@@ -85,8 +92,7 @@ class MessageUpdatesHandler(tornado.web.RequestHandler):
             messages = global_message_buffer.get_messages_since(cursor)
         if self.request.connection.stream.closed():
             return
-        res = bot.chatbot_response(messages)
-        self.write(dict(messages=res))
+        self.write(dict(messages=messages))
 
     def on_connection_close(self):
         self.wait_future.cancel()
