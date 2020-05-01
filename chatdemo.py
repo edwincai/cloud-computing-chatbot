@@ -94,6 +94,7 @@ class MessageUpdatesHandler(tornado.web.RequestHandler):
             return
         self.write(dict(messages=messages))
 
+
     def on_connection_close(self):
         self.wait_future.cancel()
 
