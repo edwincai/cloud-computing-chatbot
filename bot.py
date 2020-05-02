@@ -8,10 +8,10 @@ import random
 import sys
 
 lemmatizer = WordNetLemmatizer()
-model = load_model('chatbot_model.h5')
-intents = json.loads(open('intents.json').read())
-words = pickle.load(open('words.pkl','rb'))
-classes = pickle.load(open('classes.pkl','rb'))
+model = load_model('./data/chatbot_model.h5')
+intents = json.loads(open('./data/intents.json').read())
+words = pickle.load(open('./data/words.pkl','rb'))
+classes = pickle.load(open('./data/classes.pkl','rb'))
 
 
 def clean_up_sentence(sentence):
